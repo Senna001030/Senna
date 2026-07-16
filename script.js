@@ -148,6 +148,9 @@ const volumeSlider = document.getElementById("volumeSlider");
 const btnPlaylist = document.getElementById("btnPlaylist");
 const playerBar = document.getElementById("playerBar");
 const playlistUl = document.getElementById("playlistUl");
+const lyricsPanel = document.getElementById("lyricsPanel");
+const lyricsLines = document.getElementById("lyricsLines");
+const lyricsEmpty = document.getElementById("lyricsEmpty");
 
 let playlist = [];
 let currentIndex = -1;
@@ -235,6 +238,76 @@ function loadTrack(index) {
   audio.load();
   nowPlaying.textContent = track.name;
   highlightPlaylistItem();
+  loadLyrics(track.name);
+}
+
+// ===== 歌词解析与同步 =====
+let lrcData = [];
+
+function parseLrc(text) {
+  const lines = text.split("\n");
+  const result = [];
+  for (const line of lines) {
+    const match = line.match(/^\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)$/);
+    if (match) {
+      const min = parseInt(match[1]);
+      const sec = parseInt(match[2]);
+      const ms = match[3].length === 2 ? parseInt(match[3]) * 10 : parseInt(match[3]);
+      const time = min * 60 + sec + ms / 1000;
+      const text = match[4].trim();
+      if (text) result.push({ time, text });
+    }
+  }
+  return result;
+}
+
+async function loadLyrics(name) {
+  const base = name.replace(/\.mp3$/i, "");
+  const lrcPath = "music/" + base + ".lrc";
+  try {
+    const resp = await fetch(lrcPath);
+    if (!resp.ok) throw new Error("no lrc");
+    const text = await resp.text();
+    lrcData = parseLrc(text);
+    renderLyrics();
+    lyricsEmpty.style.display = "none";
+    lyricsLines.style.display = "";
+  } catch (e) {
+    lrcData = [];
+    lyricsEmpty.style.display = "";
+    lyricsLines.style.display = "none";
+  }
+}
+
+function renderLyrics() {
+  lyricsLines.innerHTML = lrcData.map((l, i) =>
+    `<div class="lyrics-line" data-index="${i}">${l.text}</div>`
+  ).join("");
+}
+
+function syncLyrics(currentTime) {
+  if (lrcData.length === 0) return;
+  let idx = -1;
+  for (let i = 0; i < lrcData.length; i++) {
+    if (currentTime >= lrcData[i].time) {
+      idx = i;
+    } else {
+      break;
+    }
+  }
+  const prev = lyricsLines.querySelector(".lyrics-line.active");
+  if (prev) {
+    const prevIdx = parseInt(prev.dataset.index);
+    if (prevIdx === idx) return;
+    prev.classList.remove("active");
+  }
+  if (idx >= 0) {
+    const el = lyricsLines.querySelector(`[data-index="${idx}"]`);
+    if (el) {
+      el.classList.add("active");
+      el.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+  }
 }
 
 function formatTime(seconds) {
@@ -268,6 +341,7 @@ audio.addEventListener("timeupdate", () => {
     progressFill.style.width = pct + "%";
     timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
   }
+  syncLyrics(audio.currentTime);
 });
 
 audio.addEventListener("ended", () => {
