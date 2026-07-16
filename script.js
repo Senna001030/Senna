@@ -146,6 +146,7 @@ const timeDisplay = document.getElementById("timeDisplay");
 const nowPlaying = document.getElementById("nowPlaying");
 const volumeSlider = document.getElementById("volumeSlider");
 const btnPlaylist = document.getElementById("btnPlaylist");
+const btnMode = document.getElementById("btnMode");
 const playerBar = document.getElementById("playerBar");
 const playlistUl = document.getElementById("playlistUl");
 const lyricsPanel = document.getElementById("lyricsPanel");
@@ -155,6 +156,7 @@ const lyricsEmpty = document.getElementById("lyricsEmpty");
 let playlist = [];
 let currentIndex = -1;
 let isPlaying = false;
+let playMode = "sequential"; // sequential | repeat-one | shuffle
 
 // ===== 渲染歌曲目录 =====
 function renderPlaylist() {
@@ -330,14 +332,28 @@ audio.addEventListener("timeupdate", () => {
 });
 
 audio.addEventListener("ended", () => {
-  if (currentIndex < playlist.length - 1) {
-    loadTrack(currentIndex + 1);
+  if (playMode === "repeat-one") {
+    audio.currentTime = 0;
+    audio.play();
+  } else if (playMode === "shuffle") {
+    let next;
+    if (playlist.length === 1) {
+      next = 0;
+    } else {
+      do { next = Math.floor(Math.random() * playlist.length); } while (next === currentIndex);
+    }
+    loadTrack(next);
     audio.play();
   } else {
-    isPlaying = false;
-    btnPlay.innerHTML = "&#x25B6;";
-    progressFill.style.width = "0%";
-    timeDisplay.textContent = "00:00 / 00:00";
+    if (currentIndex < playlist.length - 1) {
+      loadTrack(currentIndex + 1);
+      audio.play();
+    } else {
+      isPlaying = false;
+      btnPlay.innerHTML = "&#x25B6;";
+      progressFill.style.width = "0%";
+      timeDisplay.textContent = "00:00 / 00:00";
+    }
   }
 });
 
@@ -371,6 +387,40 @@ volumeSlider.addEventListener("input", () => {
 });
 
 audio.volume = volumeSlider.value;
+
+// ===== 播放模式切换 =====
+const modeConfig = {
+  sequential: { icon: "&#x1F501;&#xFE0E;", title: "顺序播放", next: "repeat-one" },
+  "repeat-one": { icon: "&#x1F502;&#xFE0E;", title: "单曲循环", next: "shuffle" },
+  shuffle: { icon: "&#x1F500;&#xFE0E;", title: "随机播放", next: "sequential" }
+};
+
+btnMode.addEventListener("click", () => {
+  playMode = modeConfig[playMode].next;
+  const cfg = modeConfig[playMode];
+  btnMode.innerHTML = cfg.icon;
+  btnMode.title = cfg.title;
+  btnMode.setAttribute("data-mode", playMode);
+  showModeToast(btnMode, cfg.title);
+});
+
+let modeToastTimer;
+function showModeToast(btn, text) {
+  let toast = document.getElementById("modeToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "modeToast";
+    toast.className = "mode-tooltip";
+    document.body.appendChild(toast);
+  }
+  const rect = btn.getBoundingClientRect();
+  toast.textContent = text;
+  toast.style.left = (rect.left + rect.width / 2) + "px";
+  toast.style.top = (rect.top - 34) + "px";
+  toast.classList.add("visible");
+  clearTimeout(modeToastTimer);
+  modeToastTimer = setTimeout(() => toast.classList.remove("visible"), 1200);
+}
 
 // ===== 歌单按钮：点击显示/隐藏歌曲目录 =====
 btnPlaylist.addEventListener("click", (e) => {
