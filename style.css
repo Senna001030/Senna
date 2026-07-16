@@ -462,8 +462,8 @@ body {
 .gun-code-panel {
   position: fixed;
   left: 0;
-  top: 0;
-  height: 100vh;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 150;
   display: flex;
   align-items: stretch;
@@ -472,7 +472,7 @@ body {
 }
 
 .gun-code-panel.collapsed {
-  transform: translateX(calc(-100% + 28px));
+  transform: translateY(-50%) translateX(calc(-100% + 28px));
 }
 
 .gun-code-toggle {
