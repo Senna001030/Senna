@@ -404,6 +404,9 @@ function showCopyToast(x, y) {
 }
 
 // ===== 改枪码面板折叠切换 =====
-document.getElementById("gunCodeToggle").addEventListener("click", () => {
-  document.getElementById("gunCodePanel").classList.toggle("collapsed");
+const gunCodeToggle = document.getElementById("gunCodeToggle");
+const gunCodePanel = document.getElementById("gunCodePanel");
+gunCodeToggle.addEventListener("click", () => {
+  gunCodePanel.classList.toggle("collapsed");
+  gunCodeToggle.innerHTML = gunCodePanel.classList.contains("collapsed") ? "&#x25C0;" : "&#x25B6;";
 });
