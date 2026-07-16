@@ -284,6 +284,7 @@ async function loadLyrics(name) {
     lyricsLines.style.display = "none";
   }
 }
+let lastLyricIdx = -2;
 
 function syncLyrics(currentTime) {
   if (lrcData.length === 0) {
@@ -306,6 +307,12 @@ function syncLyrics(currentTime) {
   const prev = idx > 0 ? `<div class="lyrics-line prev">${lrcData[idx - 1].text}</div>` : "";
   const curr = `<div class="lyrics-line active">${lrcData[idx].text}</div>`;
   const next = idx + 1 < lrcData.length ? `<div class="lyrics-line next">${lrcData[idx + 1].text}</div>` : "";
+  if (idx !== lastLyricIdx) {
+    lyricsLines.classList.remove("slide");
+    void lyricsLines.offsetWidth; // force reflow
+    lyricsLines.classList.add("slide");
+    lastLyricIdx = idx;
+  }
   lyricsLines.innerHTML = [prev, curr, next].filter(Boolean).join("");
 }
 

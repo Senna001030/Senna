@@ -532,6 +532,21 @@ body {
   align-items: center;
 }
 
+.lyrics-lines.slide {
+  animation: lyrics-slide 0.35s ease-out;
+}
+
+@keyframes lyrics-slide {
+  0% {
+    transform: translateY(12px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .lyrics-line {
   font-size: 1.2rem;
   color: var(--text-dim);
