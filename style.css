@@ -102,8 +102,6 @@ body {
   right: 16px;
   max-width: 1200px;
   margin: 0 auto;
-  max-height: 260px;
-  overflow-y: auto;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-bottom: none;
@@ -113,6 +111,7 @@ body {
   transform: translateY(8px);
   transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .player.show-playlist .player-playlist {
@@ -126,6 +125,8 @@ body {
   list-style: none;
   margin: 0;
   padding: 4px 0;
+  max-height: 260px;
+  overflow-y: auto;
 }
 
 .player-playlist-item {
@@ -179,20 +180,20 @@ body {
 }
 
 /* 歌单滚动条 */
-.player-playlist::-webkit-scrollbar {
+.player-playlist-list::-webkit-scrollbar {
   width: 5px;
 }
 
-.player-playlist::-webkit-scrollbar-track {
+.player-playlist-list::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.player-playlist::-webkit-scrollbar-thumb {
+.player-playlist-list::-webkit-scrollbar-thumb {
   background: rgba(124, 92, 252, 0.3);
   border-radius: 3px;
 }
 
-.player-playlist::-webkit-scrollbar-thumb:hover {
+.player-playlist-list::-webkit-scrollbar-thumb:hover {
   background: rgba(124, 92, 252, 0.5);
 }
 
