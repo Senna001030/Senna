@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senna的个人空间</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <header class="header">
+      <h1 class="title">𝒮𝑒𝓃𝓃𝒶的个人空间</h1>
+      <div class="clock" id="clock"></div>
+    </header>
+
+    <!-- 音乐播放器（底部固定） -->
+    <div class="player">
+      <audio id="audioPlayer" preload="auto"></audio>
+      <div class="player-playlist" id="playerPlaylist">
+        <ul class="player-playlist-list" id="playlistUl"></ul>
+      </div>
+      <div class="player-inner">
+        <button class="player-btn" id="btnPrev" title="上一首">&#x23EE;</button>
+        <button class="player-btn player-btn-play" id="btnPlay" title="播放">&#x25B6;</button>
+        <button class="player-btn" id="btnNext" title="下一首">&#x23ED;</button>
+        <span class="player-now-playing" id="nowPlaying">点击 + 添加音乐</span>
+        <div class="player-progress" id="progressBar">
+          <div class="player-progress-fill" id="progressFill"></div>
+        </div>
+        <span class="player-time" id="timeDisplay">00:00 / 00:00</span>
+        <div class="player-volume">
+          <span class="player-volume-icon">&#x1F50A;</span>
+          <input type="range" class="player-volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="0.25">
+        </div>
+        <button class="player-btn" id="btnAdd" title="添加音乐">+</button>
+      </div>
+      <input type="file" id="fileInput" accept="audio/*" multiple hidden>
+    </div>
+
+    <!-- 左侧浮动框：Senna的改枪码 -->
+    <div class="gun-code-panel" id="gunCodePanel">
+      <div class="gun-code-title">Senna的改枪码（点击复制）</div>
+      <div class="gun-code-list" id="gunCodeList">
+        <div class="gun-code-empty">暂无改枪码</div>
+      </div>
+    </div>
+
+    <!-- 游戏卡片列表 -->
+    <div class="grid" id="gameGrid"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
