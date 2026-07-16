@@ -93,8 +93,8 @@ gameGrid.addEventListener("mouseleave", () => {
 
 // ===== 渲染游戏卡片 =====
 function renderGames() {
-  gameGrid.innerHTML = games.map(g => `
-    <div class="card-wrapper">
+  gameGrid.innerHTML = games.map((g, i) => `
+    <div class="card-wrapper" data-card="${i}">
       <a class="card" href="${g.url}" target="_blank" rel="noopener">
         <div class="card-icon">${g.icon}</div>
         <div class="card-body">
@@ -106,12 +106,22 @@ function renderGames() {
           <span class="card-arrow">前往 →</span>
         </div>
       </a>
+      <button class="card-toggle" title="展开 / 收起">▶</button>
       <div class="submenu">
         ${(g.links || []).map(l => `<a href="${l.url}" target="_blank" rel="noopener" data-desc="${l.desc || ''}"><span class="sub-link-label">${l.label}</span><span class="sub-link-url">${l.url}</span></a>`).join("")}
       </div>
     </div>
   `).join("");
 }
+
+// ===== 卡片二级菜单切换 =====
+gameGrid.addEventListener("click", e => {
+  const toggle = e.target.closest(".card-toggle");
+  if (!toggle) return;
+  const wrapper = toggle.closest(".card-wrapper");
+  wrapper.classList.toggle("expanded");
+  toggle.textContent = wrapper.classList.contains("expanded") ? "▼" : "▶";
+});
 
 // ===== 初始渲染 =====
 renderGames();

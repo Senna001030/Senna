@@ -277,11 +277,32 @@ body {
   position: relative;
 }
 
-.card-wrapper:hover .submenu {
+.card-wrapper.expanded .submenu {
   max-height: 400px;
   opacity: 1;
   padding: 8px 0;
   border-color: var(--border);
+}
+
+/* ===== 卡片展开/收起按钮 ===== */
+.card-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.card-toggle:hover {
+  color: var(--accent);
 }
 
 /* ===== 二级菜单 ===== */
