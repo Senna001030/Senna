@@ -77,10 +77,6 @@ body {
   height: 52px;
 }
 
-.player:hover {
-  overflow: visible;
-}
-
 .player-inner {
   display: flex;
   align-items: center;
@@ -90,7 +86,7 @@ body {
   margin: 0 auto;
 }
 
-/* ===== 歌曲目录（hover 播放器栏时弹出） ===== */
+/* ===== 歌曲目录（点击歌单按钮弹出） ===== */
 .player-playlist {
   position: absolute;
   bottom: 100%;
@@ -111,7 +107,7 @@ body {
   pointer-events: none;
 }
 
-.player:hover .player-playlist {
+.player.show-playlist .player-playlist {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -286,17 +282,14 @@ body {
 
 /* ===== 卡片展开/收起按钮 ===== */
 .card-toggle {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
+  flex-shrink: 0;
   background: none;
   border: none;
   color: var(--text-dim);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   cursor: pointer;
-  padding: 4px;
+  padding: 2px 4px;
+  margin-right: 2px;
   line-height: 1;
   transition: color 0.2s;
 }
@@ -401,9 +394,7 @@ body {
   border-radius: var(--radius);
   border: 1px solid var(--border);
   padding: 20px 24px;
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.25s, box-shadow 0.25s;
-  text-decoration: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
   color: inherit;
   display: flex;
   flex-direction: row;
@@ -417,6 +408,11 @@ body {
 }
 
 .card-wrapper:hover .card {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.card-wrapper.expanded .card {
   border-radius: var(--radius) var(--radius) 0 0;
   border-color: var(--accent);
   box-shadow: 0 4px 20px var(--accent-glow);
@@ -467,16 +463,18 @@ body {
 }
 
 .card-arrow {
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: all 0.2s;
-  color: var(--accent);
+  padding: 6px 16px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
   font-weight: 600;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: background 0.2s;
 }
 
-.card-wrapper:hover .card-arrow {
-  opacity: 1;
-  transform: translateX(0);
+.card-arrow:hover {
+  background: #9b7efc;
 }
 
 /* ===== 左侧侧边栏：改枪码 ===== */

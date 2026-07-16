@@ -50,7 +50,7 @@ const games = [
   },
   {
     name: "Bilibili",
-    desc: "B站直播间收藏，点击卡片进入B站主页",
+    desc: "B站直播间收藏",
     icon: "📺",
     tags: ["直播"],
     url: "https://www.bilibili.com/",
@@ -95,7 +95,8 @@ gameGrid.addEventListener("mouseleave", () => {
 function renderGames() {
   gameGrid.innerHTML = games.map((g, i) => `
     <div class="card-wrapper" data-card="${i}">
-      <a class="card" href="${g.url}" target="_blank" rel="noopener">
+      <div class="card">
+        <button class="card-toggle" title="展开 / 收起">▶</button>
         <div class="card-icon">${g.icon}</div>
         <div class="card-body">
           <div class="card-name">${g.name}</div>
@@ -103,10 +104,9 @@ function renderGames() {
         </div>
         <div class="card-footer">
           <span class="card-type">${g.tags[0]}</span>
-          <span class="card-arrow">前往 →</span>
+          <a class="card-arrow" href="${g.url}" target="_blank" rel="noopener">跳转官网</a>
         </div>
-      </a>
-      <button class="card-toggle" title="展开 / 收起">▶</button>
+      </div>
       <div class="submenu">
         ${(g.links || []).map(l => `<a href="${l.url}" target="_blank" rel="noopener" data-desc="${l.desc || ''}"><span class="sub-link-label">${l.label}</span><span class="sub-link-url">${l.url}</span></a>`).join("")}
       </div>
@@ -116,11 +116,19 @@ function renderGames() {
 
 // ===== 卡片二级菜单切换 =====
 gameGrid.addEventListener("click", e => {
-  const toggle = e.target.closest(".card-toggle");
-  if (!toggle) return;
-  const wrapper = toggle.closest(".card-wrapper");
+  // 点击"跳转官网"按钮时不触发展开
+  if (e.target.closest(".card-arrow")) return;
+
+  const wrapper = e.target.closest(".card-wrapper");
+  if (!wrapper) return;
+
+  e.preventDefault();
+  e.stopPropagation();
   wrapper.classList.toggle("expanded");
-  toggle.textContent = wrapper.classList.contains("expanded") ? "▼" : "▶";
+  const toggle = wrapper.querySelector(".card-toggle");
+  if (toggle) {
+    toggle.textContent = wrapper.classList.contains("expanded") ? "▼" : "▶";
+  }
 });
 
 // ===== 初始渲染 =====
@@ -132,13 +140,13 @@ const audio = document.getElementById("audioPlayer");
 const btnPlay = document.getElementById("btnPlay");
 const btnPrev = document.getElementById("btnPrev");
 const btnNext = document.getElementById("btnNext");
-const btnAdd = document.getElementById("btnAdd");
-const fileInput = document.getElementById("fileInput");
 const progressBar = document.getElementById("progressBar");
 const progressFill = document.getElementById("progressFill");
 const timeDisplay = document.getElementById("timeDisplay");
 const nowPlaying = document.getElementById("nowPlaying");
 const volumeSlider = document.getElementById("volumeSlider");
+const btnPlaylist = document.getElementById("btnPlaylist");
+const playerBar = document.getElementById("playerBar");
 const playlistUl = document.getElementById("playlistUl");
 
 let playlist = [];
@@ -148,7 +156,7 @@ let isPlaying = false;
 // ===== 渲染歌曲目录 =====
 function renderPlaylist() {
   if (playlist.length === 0) {
-    playlistUl.innerHTML = '<li class="player-playlist-empty">播放列表为空，点击 + 添加音乐</li>';
+    playlistUl.innerHTML = '<li class="player-playlist-empty">播放列表为空</li>';
     return;
   }
   playlistUl.innerHTML = playlist.map((track, i) => {
@@ -220,24 +228,6 @@ function showAutoplayPrompt() {
   document.addEventListener("click", dismiss);
 }
 
-btnAdd.addEventListener("click", () => fileInput.click());
-
-fileInput.addEventListener("change", () => {
-  const files = Array.from(fileInput.files);
-  const audioFiles = files.filter(f => !f.name.endsWith(".lrc"));
-
-  audioFiles.forEach(file => {
-    playlist.push({ name: file.name, blob: URL.createObjectURL(file) });
-  });
-
-  fileInput.value = "";
-  renderPlaylist();
-  if (currentIndex === -1 && playlist.length > 0) {
-    currentIndex = 0;
-    loadTrack(0);
-  }
-});
-
 function loadTrack(index) {
   currentIndex = index;
   const track = playlist[index];
@@ -254,10 +244,7 @@ function formatTime(seconds) {
 }
 
 btnPlay.addEventListener("click", () => {
-  if (playlist.length === 0) {
-    fileInput.click();
-    return;
-  }
+  if (playlist.length === 0) return;
   if (isPlaying) {
     audio.pause();
   } else {
@@ -325,6 +312,19 @@ volumeSlider.addEventListener("input", () => {
 });
 
 audio.volume = volumeSlider.value;
+
+// ===== 歌单按钮：点击显示/隐藏歌曲目录 =====
+btnPlaylist.addEventListener("click", (e) => {
+  e.stopPropagation();
+  playerBar.classList.toggle("show-playlist");
+});
+
+// 点击播放器外部关闭歌单
+document.addEventListener("click", (e) => {
+  if (!playerBar.contains(e.target)) {
+    playerBar.classList.remove("show-playlist");
+  }
+});
 
 // ===== 实时时钟 =====
 function updateClock() {

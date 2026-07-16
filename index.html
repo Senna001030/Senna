@@ -15,7 +15,7 @@
     </header>
 
     <!-- 音乐播放器（底部固定） -->
-    <div class="player">
+    <div class="player" id="playerBar">
       <audio id="audioPlayer" preload="auto"></audio>
       <div class="player-playlist" id="playerPlaylist">
         <ul class="player-playlist-list" id="playlistUl"></ul>
@@ -24,7 +24,8 @@
         <button class="player-btn" id="btnPrev" title="上一首">&#x23EE;</button>
         <button class="player-btn player-btn-play" id="btnPlay" title="播放">&#x25B6;</button>
         <button class="player-btn" id="btnNext" title="下一首">&#x23ED;</button>
-        <span class="player-now-playing" id="nowPlaying">点击 + 添加音乐</span>
+        <button class="player-btn" id="btnPlaylist" title="歌单">&#x1F3B5;</button>
+        <span class="player-now-playing" id="nowPlaying">未播放</span>
         <div class="player-progress" id="progressBar">
           <div class="player-progress-fill" id="progressFill"></div>
         </div>
@@ -33,9 +34,7 @@
           <span class="player-volume-icon">&#x1F50A;</span>
           <input type="range" class="player-volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="0.25">
         </div>
-        <button class="player-btn" id="btnAdd" title="添加音乐">+</button>
       </div>
-      <input type="file" id="fileInput" accept="audio/*" multiple hidden>
     </div>
 
     <!-- 左侧浮动框：Senna的改枪码 -->
