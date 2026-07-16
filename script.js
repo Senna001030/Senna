@@ -402,3 +402,8 @@ function showCopyToast(x, y) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove("visible"), 1200);
 }
+
+// ===== 改枪码面板折叠切换 =====
+document.getElementById("gunCodeToggle").addEventListener("click", () => {
+  document.getElementById("gunCodePanel").classList.toggle("collapsed");
+});

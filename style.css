@@ -471,6 +471,49 @@ body {
   padding: 16px 18px;
   width: 400px;
   backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  overflow: hidden;
+  transition: width 0.3s, padding 0.3s;
+}
+
+.gun-code-panel.collapsed {
+  width: 40px;
+  padding: 10px 8px;
+}
+
+.gun-code-toggle {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.3s, color 0.2s;
+}
+
+.gun-code-toggle:hover {
+  color: var(--accent);
+}
+
+.gun-code-panel:not(.collapsed) .gun-code-toggle {
+  transform: rotate(90deg);
+}
+
+.gun-code-content {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.25s, max-width 0.3s;
+}
+
+.gun-code-panel.collapsed .gun-code-content {
+  opacity: 0;
+  max-width: 0;
 }
 
 .gun-code-title {
@@ -485,6 +528,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .gun-code-item {
