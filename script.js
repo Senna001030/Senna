@@ -286,18 +286,27 @@ async function loadLyrics(name) {
 }
 
 function syncLyrics(currentTime) {
-  if (lrcData.length === 0) return;
+  if (lrcData.length === 0) {
+    lyricsLines.innerHTML = "";
+    return;
+  }
   let idx = -1;
   for (let i = 0; i < lrcData.length; i++) {
-    if (currentTime >= lrcData[i].time) {
-      idx = i;
-    } else {
-      break;
-    }
+    if (currentTime >= lrcData[i].time) idx = i;
+    else break;
   }
-  if (idx >= 0 && lrcData[idx]) {
-    lyricsLines.innerHTML = `<div class="lyrics-line active">${lrcData[idx].text}</div>`;
+  if (idx < 0) {
+    // 还没到第一句：显示第一句和下一句
+    lyricsLines.innerHTML = [
+      `<div class="lyrics-line active">${lrcData[0].text}</div>`,
+      lrcData[1] ? `<div class="lyrics-line next">${lrcData[1].text}</div>` : ""
+    ].join("");
+    return;
   }
+  const prev = idx > 0 ? `<div class="lyrics-line prev">${lrcData[idx - 1].text}</div>` : "";
+  const curr = `<div class="lyrics-line active">${lrcData[idx].text}</div>`;
+  const next = idx + 1 < lrcData.length ? `<div class="lyrics-line next">${lrcData[idx + 1].text}</div>` : "";
+  lyricsLines.innerHTML = [prev, curr, next].filter(Boolean).join("");
 }
 
 function formatTime(seconds) {

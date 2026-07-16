@@ -547,6 +547,13 @@ body {
   box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(124, 92, 252, 0.12);
   background: rgba(124, 92, 252, 0.1);
 }
+
+.lyrics-line.prev,
+.lyrics-line.next {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 400;
+}
 .gun-code-panel {
   position: fixed;
   left: 0;
