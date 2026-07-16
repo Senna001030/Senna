@@ -485,54 +485,46 @@ body {
   background: #9b7efc;
 }
 
-/* ===== 右侧歌词面板 ===== */
+/* ===== 歌词展示（播放器上方） ===== */
 .lyrics-panel {
   position: fixed;
-  right: 140px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 320px;
-  height: 750px;
-  z-index: 140;
+  bottom: 52px;
+  left: 0;
+  right: 0;
+  z-index: 199;
   background: transparent;
   border: none;
-  backdrop-filter: none;
-  overflow: hidden;
-  padding: 20px 16px;
-}
-
-.lyrics-lines {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0;
+  text-align: center;
+  padding: 6px 16px;
+  pointer-events: none;
 }
 
 .lyrics-empty {
   font-size: 0.85rem;
   color: var(--text-dim);
-  text-align: center;
-  padding: 40px 0;
+}
+
+.lyrics-lines {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .lyrics-line {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--text-dim);
-  padding: 6px 8px;
-  border-radius: 6px;
+  padding: 4px 16px;
+  border-radius: 8px;
   transition: all 0.3s ease;
-  cursor: default;
-  line-height: 1.6;
-  text-align: center;
+  line-height: 1.5;
 }
 
 .lyrics-line.active {
   color: #fff;
-  background: rgba(124, 92, 252, 0.15);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  border-radius: 8px;
   box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(124, 92, 252, 0.12);
+  background: rgba(124, 92, 252, 0.1);
 }
 .gun-code-panel {
   position: fixed;
@@ -834,17 +826,15 @@ body {
 
   /* 歌词面板 */
   .lyrics-panel {
-    width: 240px;
-    right: 20px;
-    height: 500px;
-    padding: 12px 10px;
+    bottom: 48px;
+    padding: 4px 12px;
   }
 
   .lyrics-line {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   .lyrics-line.active {
-    font-size: 0.92rem;
+    font-size: 1rem;
   }
 }

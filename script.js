@@ -269,7 +269,7 @@ async function loadLyrics(name) {
     if (!resp.ok) throw new Error("no lrc");
     const text = await resp.text();
     lrcData = parseLrc(text);
-    renderLyrics();
+    syncLyrics(audio.currentTime);
     lyricsEmpty.style.display = "none";
     lyricsLines.style.display = "";
   } catch (e) {
@@ -277,12 +277,6 @@ async function loadLyrics(name) {
     lyricsEmpty.style.display = "";
     lyricsLines.style.display = "none";
   }
-}
-
-function renderLyrics() {
-  lyricsLines.innerHTML = lrcData.map((l, i) =>
-    `<div class="lyrics-line" data-index="${i}">${l.text}</div>`
-  ).join("");
 }
 
 function syncLyrics(currentTime) {
@@ -295,18 +289,8 @@ function syncLyrics(currentTime) {
       break;
     }
   }
-  const prev = lyricsLines.querySelector(".lyrics-line.active");
-  if (prev) {
-    const prevIdx = parseInt(prev.dataset.index);
-    if (prevIdx === idx) return;
-    prev.classList.remove("active");
-  }
-  if (idx >= 0) {
-    const el = lyricsLines.querySelector(`[data-index="${idx}"]`);
-    if (el) {
-      el.classList.add("active");
-      el.scrollIntoView({ block: "center", behavior: "smooth" });
-    }
+  if (idx >= 0 && lrcData[idx]) {
+    lyricsLines.innerHTML = `<div class="lyrics-line active">${lrcData[idx].text}</div>`;
   }
 }
 
