@@ -890,3 +890,28 @@ body {
   opacity: 1;
   transform: translate(-50%, 0);
 }
+
+/* ===== 点击波纹特效 ===== */
+.click-ripple {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: ripple-out 0.7s ease-out forwards;
+  border: 1px solid rgba(124, 92, 252, 0.5);
+  background: rgba(124, 92, 252, 0.15);
+}
+@keyframes ripple-out {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

@@ -529,3 +529,13 @@ gunCodeToggle.addEventListener("click", () => {
   gunCodePanel.classList.toggle("collapsed");
   gunCodeToggle.innerHTML = gunCodePanel.classList.contains("collapsed") ? "&#x25B6;" : "&#x25C0;";
 });
+
+// ===== 点击波纹特效 =====
+document.addEventListener("click", e => {
+  const ripple = document.createElement("div");
+  ripple.className = "click-ripple";
+  ripple.style.left = e.clientX + "px";
+  ripple.style.top = e.clientY + "px";
+  document.body.appendChild(ripple);
+  ripple.addEventListener("animationend", () => ripple.remove());
+});
