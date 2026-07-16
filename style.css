@@ -527,6 +527,7 @@ body {
 
 .lyrics-lines {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
