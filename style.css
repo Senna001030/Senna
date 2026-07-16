@@ -488,10 +488,11 @@ body {
 /* ===== 右侧歌词面板 ===== */
 .lyrics-panel {
   position: fixed;
-  right: 40px;
-  top: 120px;
-  bottom: 200px;
+  right: 140px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 320px;
+  height: 750px;
   z-index: 140;
   background: transparent;
   border: none;
@@ -515,19 +516,20 @@ body {
 }
 
 .lyrics-line {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: var(--text-dim);
-  padding: 4px 8px;
+  padding: 6px 8px;
   border-radius: 6px;
   transition: all 0.3s ease;
   cursor: default;
-  line-height: 1.5;
+  line-height: 1.6;
+  text-align: center;
 }
 
 .lyrics-line.active {
   color: #fff;
   background: rgba(124, 92, 252, 0.15);
-  font-size: 0.92rem;
+  font-size: 1.1rem;
   font-weight: 600;
   border-radius: 8px;
   box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(124, 92, 252, 0.12);
@@ -834,16 +836,15 @@ body {
   .lyrics-panel {
     width: 240px;
     right: 20px;
-    top: 100px;
-    bottom: 180px;
+    height: 500px;
     padding: 12px 10px;
   }
 
   .lyrics-line {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 
   .lyrics-line.active {
-    font-size: 0.78rem;
+    font-size: 0.92rem;
   }
 }
