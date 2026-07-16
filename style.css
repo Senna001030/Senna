@@ -465,22 +465,9 @@ body {
   top: 50%;
   transform: translateY(-50%);
   z-index: 150;
-  background: rgba(26, 26, 36, 0.92);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  width: 400px;
-  backdrop-filter: blur(8px);
   display: flex;
   align-items: flex-start;
   gap: 0;
-  overflow: hidden;
-  transition: width 0.3s, padding 0.3s;
-}
-
-.gun-code-panel.collapsed {
-  width: 40px;
-  padding: 10px 8px;
 }
 
 .gun-code-toggle {
@@ -490,7 +477,7 @@ body {
   color: var(--text-dim);
   font-size: 1.1rem;
   cursor: pointer;
-  padding: 0;
+  padding: 6px 4px;
   line-height: 1;
   transition: transform 0.3s, color 0.2s;
 }
@@ -500,20 +487,30 @@ body {
 }
 
 .gun-code-panel:not(.collapsed) .gun-code-toggle {
+  padding: 16px 8px;
+}
+
+.gun-code-panel:not(.collapsed) .gun-code-toggle {
   transform: rotate(90deg);
 }
 
 .gun-code-content {
-  flex: 1;
-  min-width: 0;
+  background: rgba(26, 26, 36, 0.92);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  width: 380px;
+  backdrop-filter: blur(8px);
   overflow: hidden;
   opacity: 1;
-  transition: opacity 0.25s, max-width 0.3s;
+  transition: opacity 0.25s, width 0.3s, padding 0.3s;
 }
 
 .gun-code-panel.collapsed .gun-code-content {
   opacity: 0;
-  max-width: 0;
+  width: 0;
+  padding: 0;
+  border-width: 0;
 }
 
 .gun-code-title {
