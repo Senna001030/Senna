@@ -487,10 +487,6 @@ body {
 }
 
 .gun-code-panel:not(.collapsed) .gun-code-toggle {
-  padding: 16px 8px;
-}
-
-.gun-code-panel:not(.collapsed) .gun-code-toggle {
   transform: rotate(90deg);
 }
 
