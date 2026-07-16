@@ -50,12 +50,6 @@ body {
   background-clip: text;
 }
 
-.subtitle {
-  margin-top: 10px;
-  font-size: 1rem;
-  color: var(--text-dim);
-}
-
 .clock {
   margin-top: 12px;
   font-size: 1.3rem;
@@ -235,7 +229,6 @@ body {
 .player-btn-mode {
   font-size: 0.95rem;
   margin-left: 2px;
-  border: 1px solid var(--border);
 }
 
 .player-btn-mode[data-mode="shuffle"] {
@@ -442,11 +435,7 @@ body {
   gap: 20px;
 }
 
-.card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 4px 20px var(--accent-glow);
-}
-
+.card:hover,
 .card-wrapper:hover .card {
   border-color: var(--accent);
   box-shadow: 0 4px 20px var(--accent-glow);

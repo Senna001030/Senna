@@ -1,3 +1,5 @@
+(function(){ "use strict";
+
 // ===== 游戏数据 =====
 // 每个游戏：名称、描述、图标（emoji）、类型标签、跳转链接
 const games = [
@@ -506,20 +508,21 @@ setInterval(updateClock, 1000);
 
 // ===== 复制成功提示 =====
 let toastTimer;
-function showCopyToast(x, y) {
-  let toast = document.getElementById("copyToast");
+function showCopyToast(x, y, msg) {
+  msg = msg || "复制成功";
+  var toast = document.getElementById("copyToast");
   if (!toast) {
     toast = document.createElement("div");
     toast.id = "copyToast";
     toast.className = "copy-toast";
     document.body.appendChild(toast);
   }
-  toast.textContent = "复制成功";
+  toast.textContent = msg;
   toast.style.left = x + "px";
   toast.style.top = (y - 36) + "px";
   toast.classList.add("visible");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("visible"), 1200);
+  toastTimer = setTimeout(function() { toast.classList.remove("visible"); }, 1200);
 }
 
 // ===== 改枪码面板折叠切换 =====
@@ -539,3 +542,5 @@ document.addEventListener("click", e => {
   document.body.appendChild(ripple);
   ripple.addEventListener("animationend", () => ripple.remove());
 });
+
+})();
