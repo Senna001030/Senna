@@ -118,8 +118,8 @@ function renderGames() {
 
 // ===== 卡片二级菜单切换 =====
 gameGrid.addEventListener("click", e => {
-  // 点击"跳转官网"按钮时不触发展开
-  if (e.target.closest(".card-arrow")) return;
+  // 点击"跳转官网"按钮或子菜单链接时不触发展开
+  if (e.target.closest(".card-arrow, .submenu a")) return;
 
   const wrapper = e.target.closest(".card-wrapper");
   if (!wrapper) return;
