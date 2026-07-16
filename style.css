@@ -532,7 +532,7 @@ body {
 }
 
 .lyrics-line {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--text-dim);
   padding: 4px 16px;
   border-radius: 8px;
@@ -542,7 +542,7 @@ body {
 
 .lyrics-line.active {
   color: #fff;
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   font-weight: 600;
   box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(124, 92, 252, 0.12);
   background: rgba(124, 92, 252, 0.1);
@@ -852,11 +852,11 @@ body {
   }
 
   .lyrics-line {
-    font-size: 0.9rem;
+    font-size: 1.05rem;
   }
 
   .lyrics-line.active {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 }
 
