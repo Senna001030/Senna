@@ -408,5 +408,5 @@ const gunCodeToggle = document.getElementById("gunCodeToggle");
 const gunCodePanel = document.getElementById("gunCodePanel");
 gunCodeToggle.addEventListener("click", () => {
   gunCodePanel.classList.toggle("collapsed");
-  gunCodeToggle.innerHTML = gunCodePanel.classList.contains("collapsed") ? "&#x25C0;" : "&#x25B6;";
+  gunCodeToggle.innerHTML = gunCodePanel.classList.contains("collapsed") ? "&#x25B6;" : "&#x25C0;";
 });
