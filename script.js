@@ -57,6 +57,7 @@ const games = [
     tags: ["直播"],
     url: "https://www.bilibili.com/",
     links: [
+      { label: "阿耶檀识丶粥", url: "https://space.bilibili.com/328003921", desc: "B站UP主：阿耶檀识丶粥" },
       { label: "黑化米米宗", url: "https://live.bilibili.com/22472183", desc: "B站直播间：黑化米米宗" },
       { label: "蜡笔小爹Official", url: "https://live.bilibili.com/1986464383", desc: "B站直播间：蜡笔小爹Official" },
       { label: "拾忆-三角洲行动", url: "https://live.bilibili.com/32042349", desc: "B站直播间：拾忆-三角洲行动" }
