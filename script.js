@@ -203,9 +203,10 @@ function highlightPlaylistItem() {
       const src = "music/" + name;
       playlist.push({ name, blob: src });
     });
-    currentIndex = 0;
+    const randomIndex = Math.floor(Math.random() * names.length);
+    currentIndex = randomIndex;
     renderPlaylist();
-    loadTrack(0);
+    loadTrack(randomIndex);
     audio.play().catch(() => {
       showAutoplayPrompt();
     });
