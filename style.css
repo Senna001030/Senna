@@ -178,6 +178,24 @@ body {
   text-align: center;
 }
 
+/* 歌单滚动条 */
+.player-playlist::-webkit-scrollbar {
+  width: 5px;
+}
+
+.player-playlist::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.player-playlist::-webkit-scrollbar-thumb {
+  background: rgba(124, 92, 252, 0.3);
+  border-radius: 3px;
+}
+
+.player-playlist::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 92, 252, 0.5);
+}
+
 .player-now-playing {
   font-size: 0.8rem;
   color: var(--text-dim);
